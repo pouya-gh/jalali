@@ -108,3 +108,119 @@ impl JTMBuilder {
     }
   }
 }
+
+impl JTM {
+  pub fn from_secs(secs: i64) -> Self {
+    let mut result: Self;
+    unsafe {
+      result = mem::uninitialized();
+      jlocaltime_r(&secs as *const time_t, &mut result);
+    }
+    result
+  }
+
+  pub fn from_days(days: i32) -> Self {
+    let mut result: Self;
+    unsafe {
+      result = mem::uninitialized();
+      jalali_get_date(days as c_int, &mut result);
+    }
+    result
+  }
+
+  pub fn from_secs_to_utc(secs: i64) -> Self {
+    let mut result: Self;
+    unsafe {
+      result = mem::uninitialized();
+      jgmtime_r(&secs as *const time_t, &mut result);
+    }
+    result
+  }
+
+  pub fn from_formatted_string(s: &String, format: &String) -> Result<Self,()> {
+    let mut result: Self;
+    let tmp;
+    unsafe {
+      result = mem::uninitialized();
+      tmp = jstrptime(s.as_ptr() as *const i8, 
+                      format.as_ptr() as *const i8, 
+                      &mut result);
+    }
+    result.update();
+    if tmp.is_null() {
+      Err(())
+    } else {
+      Ok(result)
+    }
+  }
+
+  pub fn create_date_from_days(&mut self) -> Result<(),()> {
+    let tmp = unsafe {
+      jalali_create_date_from_days(self)
+    };
+    match tmp {
+      -1 => Err(()),
+      _ => Ok(()),
+    }
+  }
+
+  pub fn create_days_from_date(&mut self) -> Result<(),()> {
+    let tmp = unsafe {
+      jalali_create_days_from_date(self)
+    };
+    match tmp {
+      -1 => Err(()),
+      _ => Ok(()),
+    }
+  }
+
+  pub fn get_diff(&self) -> i32 {
+    unsafe {
+      jalali_get_diff(self)
+    }
+  }
+
+  pub fn update(&mut self) {
+    unsafe {
+      jalali_update(self);
+    }
+  }
+
+  pub fn show_time(&self) {
+    unsafe {
+      jalali_show_time(self);
+    }
+  }
+
+  pub fn to_string(&self) -> String {
+    let mut buff = Vec::<u8>::with_capacity(100);
+    let mut result: String;
+    unsafe {
+      jasctime_r(self, buff.as_mut_ptr() as *mut i8);
+      result = CString::from_raw(buff.as_mut_ptr() as *mut i8).into_string().unwrap();
+    }
+    mem::forget(buff);
+    return result;
+  }
+
+  pub fn to_secs(&mut self) -> i64 {
+    unsafe {
+      jmktime(self)
+    }
+  }
+
+  pub fn make_formated_string(&self, format: &String, buff: &mut String) -> usize {
+    let mut b = String::with_capacity(buff.capacity()).into_bytes();
+    let retval: usize; 
+    unsafe {
+      let f = format.as_ptr() as *const i8;
+      let max = b.capacity() as size_t;
+      retval = jstrftime(b.as_mut_ptr() as *mut i8, max, f, self);
+      let tmp = CString::from_raw(b.as_mut_ptr() as *mut i8).into_string().unwrap();
+      ptr::copy_nonoverlapping(&tmp, buff, 1);
+      mem::forget(tmp);
+    }
+    mem::forget(b);
+    return retval;
+  }
+}
