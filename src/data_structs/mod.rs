@@ -14,7 +14,7 @@ pub struct JTM {
   pub tm_yday: c_int,      /* Day in the year. (0-365) */
   pub tm_isdst: c_int,     /* Daylight saving time is in effect. */
   pub tm_gmtoff: c_long,   /* Seconds east of UTC. */
-  tm_zone: *const c_char,  /* Timezone abbreviation.  */
+  pub tm_zone: *const c_char,  /* Timezone abbreviation.  */
 }
 
 #[derive(Debug)]
