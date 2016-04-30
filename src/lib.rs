@@ -5,8 +5,4 @@ mod data_structs;
 mod wrappers;
 
 #[cfg(test)]
-mod test {
-    #[test]
-    fn it_works() {
-    }
-}
+mod test;
