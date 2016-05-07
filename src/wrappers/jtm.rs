@@ -180,7 +180,7 @@ impl JTM {
     }
   }
 
-  pub fn get_diff(&self) -> i32 {
+  pub fn get_days_since_epoch(&self) -> i32 {
     unsafe {
       jalali_get_diff(self)
     }
