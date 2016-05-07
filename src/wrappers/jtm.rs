@@ -154,6 +154,12 @@ impl JTM {
     }
   }
 
+  pub fn get_timezone(&self) -> String {
+    let mut tst = String::with_capacity(5);
+    self.make_formated_string(&"%Z".to_string(), &mut tst);
+    tst
+  }
+
   pub fn create_date_from_days(&mut self) -> Result<(),()> {
     let tmp = unsafe {
       jalali_create_date_from_days(self)
