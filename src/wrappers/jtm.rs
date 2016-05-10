@@ -138,12 +138,16 @@ impl JTM {
   }
 
   pub fn from_formatted_string(s: &String, format: &String) -> Result<Self,()> {
+    let mut tmp_s = s.clone();
+    let mut tmp_f = format.clone();
+    tmp_f.push('\0');
+    tmp_s.push('\0');
     let mut result: Self;
     let tmp;
     unsafe {
       result = mem::uninitialized();
-      tmp = jstrptime(s.as_ptr() as *const i8, 
-                      format.as_ptr() as *const i8, 
+      tmp = jstrptime(tmp_s.as_ptr() as *const i8,
+                      tmp_f.as_ptr() as *const i8,
                       &mut result);
     }
     result.update();
