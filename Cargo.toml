@@ -7,7 +7,7 @@ homepage = "https://github.com/psparabara/jalali"
 repository = "https://github.com/psparabara/jalali"
 license = "MIT"
 license-file = "License.txt"
-keywords = ["cal", "calendar", "jalali", "persian", "date", "time"]
+keywords = ["cal", "calendar", "jalali", "persian", "date"]
 readme = "README.md"
 
 [dependencies]
