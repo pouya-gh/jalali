@@ -1,7 +1,6 @@
 //! This module holds the definitions of
 //! AB_JTM related wrappers.
 
-
 use libc::time_t;
 use data_structs::AB_JTM;
 use jalali_bindings::*;
