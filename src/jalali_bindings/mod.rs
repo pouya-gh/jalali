@@ -1,3 +1,5 @@
+//! A module for holding function signatures in libjalali.
+
 use libc::{c_int, c_char, time_t, size_t};
 use super::data_structs::*;
 
