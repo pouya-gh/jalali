@@ -5,3 +5,6 @@ authors = ["Pouya Gharib Pour <p.gharibpour@gmail.com>"]
 
 [dependencies]
 libc = "0.2"
+
+[features]
+use-shared-jalali = []
