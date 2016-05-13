@@ -1,5 +1,4 @@
-use libc::{c_int, c_char, c_long, time_t, size_t};
-use std::fmt::Debug;
+use libc::{c_int, c_char, c_long};
 
 #[derive(Debug)]
 #[repr(C)]

@@ -12,7 +12,7 @@ fn assert_jtm(t1: JTM, t2: JTM) {
   assert_eq!(t1.tm_yday, t2.tm_yday);
   assert_eq!(t1.tm_isdst, t2.tm_isdst);
   assert_eq!(t1.tm_gmtoff, t2.tm_gmtoff);
-  assert_eq!(t1.get_timezone().shrink_to_fit(), 
+  assert_eq!(t1.get_timezone().shrink_to_fit(),
              t2.get_timezone().shrink_to_fit());
 }
 
@@ -83,6 +83,7 @@ fn it_has_a_valid_from_secs_initializer() {
   assert_jtm(t1, t2);
 }
 
+#[test]
 fn it_has_a_valid_from_days_initializer() {
   let t1 = JTMBuilder::new().set_sec(0).
                              set_min(0).
@@ -144,7 +145,7 @@ fn it_has_a_valid_from_formatted_string_initializer() {
 fn it_can_create_month_and_day_from_yearday() {
   let t1 = JTMBuilder::new().set_mday(26).set_mon(6).set_yday(211).build();
   let mut t2 = JTMBuilder::new().set_yday(211).build();
-  t2.create_date_from_days();
+  t2.create_date_from_days().unwrap();
   assert_jtm(t1, t2);
 }
 
@@ -152,7 +153,7 @@ fn it_can_create_month_and_day_from_yearday() {
 fn it_can_create_yearday_from_month_and_day() {
   let t1 = JTMBuilder::new().set_mday(26).set_mon(6).set_yday(211).build();
   let mut t2 = JTMBuilder::new().set_mday(26).set_mon(6).build();
-  t2.create_days_from_date();
+  t2.create_days_from_date().unwrap();
   assert_jtm(t1, t2);
 }
 

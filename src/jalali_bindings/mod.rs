@@ -1,4 +1,4 @@
-use libc::{c_int, c_char, c_long, time_t, size_t};
+use libc::{c_int, c_char, time_t, size_t};
 use super::data_structs::*;
 
 #[link(name = "jalali", kind = "static")]

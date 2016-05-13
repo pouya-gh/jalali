@@ -1,4 +1,4 @@
-use libc::{c_int, c_char, c_long, time_t, size_t};
+use libc::{c_int, time_t, size_t};
 use data_structs::{JTM};
 use jalali_bindings::*;
 use std::ffi::CString;
@@ -204,7 +204,7 @@ impl JTM {
 
   pub fn to_string(&self) -> String {
     let mut buff = Vec::<u8>::with_capacity(100);
-    let mut result: String;
+    let result: String;
     unsafe {
       jasctime_r(self, buff.as_mut_ptr() as *mut i8);
       result = CString::from_raw(buff.as_mut_ptr() as *mut i8).into_string().unwrap();
@@ -221,7 +221,7 @@ impl JTM {
 
   pub fn make_formated_string(&self, format: &String, buff: &mut String) -> usize {
     let mut b = String::with_capacity(buff.capacity()).into_bytes();
-    let retval: usize; 
+    let retval: usize;
     unsafe {
       let f = format.as_ptr() as *const i8;
       let max = b.capacity() as size_t;
