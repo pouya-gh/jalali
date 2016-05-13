@@ -1,5 +1,5 @@
 //! This module holds the definitions of JTMBuilder and
-//! JTM related bindings.
+//! JTM related wrappers.
 
 use libc::{c_int, time_t, size_t};
 use data_structs::{JTM};
