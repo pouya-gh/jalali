@@ -2,6 +2,13 @@
 name = "jalali"
 version = "0.1.0"
 authors = ["Pouya Gharib Pour <p.gharibpour@gmail.com>"]
+description = "Rust wrappers for libjalali(https://github.com/ashkang/jcal)."
+homepage = "https://github.com/psparabara/jalali"
+repository = "https://github.com/psparabara/jalali"
+license = "MIT"
+license-file = "License.txt"
+keywords = ["cal", "calendar", "jalali", "persian", "date", "time"]
+readme = "README.md"
 
 [dependencies]
 libc = "0.2"
